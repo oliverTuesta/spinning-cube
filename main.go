@@ -26,6 +26,15 @@ func rotate(x float64, y float64, t float64) (float64, float64) {
 	return result[0], result[1]
 }
 
+func draw_rectangle(coords [4][2]float64, screen tcell.Screen, cx int, cy int) {
+	style := tcell.StyleDefault.Foreground(tcell.ColorGreen)
+	for i := 0; i < 4; i++ {
+		x := coords[i][0]
+		y := coords[i][1]
+		screen.SetContent(int(x)+cx, int(y*0.5)+cy, '@', nil, style)
+	}
+}
+
 func main() {
 	screen, err := tcell.NewScreen()
 	if err != nil {
@@ -35,8 +44,6 @@ func main() {
 		panic(err)
 	}
 	defer screen.Fini()
-
-	style := tcell.StyleDefault.Foreground(tcell.ColorGreen)
 
 	keys := make(chan *tcell.EventKey, 10)
 
@@ -50,13 +57,25 @@ func main() {
 		}
 	}()
 
-	ticker := time.NewTicker(20 * time.Millisecond)
+	ticker := time.NewTicker(100 * time.Millisecond)
 	defer ticker.Stop()
 
-	angle := 0.0
-	baseX, baseY := 30.0, 0.0
+	angle := 0.1
+
 	w, h := screen.Size()
+
 	cx, cy := w/2, h/2
+
+	rectangleWidth := 10
+	rectangleHeight := 15
+
+	coords := [4][2]float64{
+		{0, 0},
+		{float64(rectangleWidth), 0},
+		{float64(rectangleWidth), float64(rectangleHeight)},
+		{0, float64(rectangleHeight)},
+	}
+
 	for {
 		select {
 		case ev := <-keys:
@@ -65,11 +84,14 @@ func main() {
 				return
 			}
 		case <-ticker.C:
-			x, y := rotate(baseX, baseY, angle)
-			angle += 0.1
+			for i := range 4 {
+				x := coords[i][0]
+				y := coords[i][1]
+				coords[i][0], coords[i][1] = rotate(x, y, angle)
+			}
 
 			screen.Clear()
-			screen.SetContent(int(x)+cx, int(y*0.5)+cy, '@', nil, style)
+			draw_rectangle(coords, screen, cx, cy)
 			screen.Show()
 		}
 	}
