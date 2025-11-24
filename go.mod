@@ -1,4 +1,4 @@
-module githug.com/olivertuesta/spinning-donut
+module github.com/olivertuesta/spinning-cube
 
 go 1.24.5
 
