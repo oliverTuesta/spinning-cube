@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/gdamore/tcell/v2"
-	"github.com/olivertuesta/spinning-donut/internal/math2d"
+	"github.com/olivertuesta/spinning-cube/internal/math"
 )
 
 func main() {
@@ -38,8 +38,8 @@ func main() {
 
 	cx, cy := float64(w)/2.0, float64(h)/2.0
 
-	rectangleWidth := 25
-	rectangleHeight := 25
+	rectangleWidth := 15
+	rectangleHeight := 20
 
 	offcenter := 15.0
 
@@ -61,11 +61,11 @@ func main() {
 			for i := range 4 {
 				x := coords[i][0]
 				y := coords[i][1]
-				coords[i][0], coords[i][1] = math2d.Rotate(x, y, angle)
+				coords[i][0], coords[i][1] = math.Rotate(x, y, angle)
 			}
 
 			screen.Clear()
-			math2d.DrawRectangle(coords, screen, cx, cy)
+			math.DrawRectangle(coords, screen, cx, cy)
 			screen.Show()
 		}
 	}

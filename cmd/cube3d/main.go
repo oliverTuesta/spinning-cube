@@ -47,9 +47,6 @@ func draw_line(x1, y1, x2, y2 float64, screen tcell.Screen) {
 
 func draw_rectangle(coords [4][2]float64, screen tcell.Screen, cx float64, cy float64) {
 	for i := range len(coords) - 1 {
-		// x := coords[i][0]
-		// y := coords[i][1]
-		// screen.SetContent(int(x)+cx, int(y*0.5)+cy, '@', nil, style)
 		draw_line(coords[i][0]+cx, (coords[i][1]/2.0)+cy, coords[i+1][0]+cx, (coords[i+1][1]/2.0)+cy, screen)
 	}
 	draw_line(coords[3][0]+cx, (coords[3][1]/2.0)+cy, coords[0][0]+cx, (coords[0][1]/2.0)+cy, screen)
