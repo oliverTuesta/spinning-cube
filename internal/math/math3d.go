@@ -23,3 +23,4 @@ func DrawLine3D(x1, y1, z1, x2, y2, z2 float64, screen tcell.Screen) {
 		y += dy
 	}
 }
+
