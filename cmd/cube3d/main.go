@@ -32,9 +32,10 @@ func main() {
 	ticker := time.NewTicker(20 * time.Millisecond)
 	defer ticker.Stop()
 
-	g3 := math3d.NewGraphics3D(&screen, 100)
-	cube := math3d.NewCube(15)
-	cube.Move(10, 5, 3)
+	g3 := math3d.NewGraphics3D(&screen, 1000)
+	cubeWidth := 30.0
+	cube := math3d.NewCube(cubeWidth)
+	cube.Move(-cubeWidth/2,-cubeWidth/2,500)
 
 	for {
 		select {
@@ -45,8 +46,7 @@ func main() {
 			}
 		case <-ticker.C:
 
-			cube.RotateY(0.04)
-			cube.RotateX(0.005)
+			cube.RotateAroundCenter(0.05,0.02,0)
 
 			screen.Clear()
 			g3.DrawCube(&cube)
