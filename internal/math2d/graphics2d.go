@@ -31,7 +31,10 @@ func (g *Graphics2D) DrawLine(v1 Vec2, v2 Vec2) {
 		sx := int(math.Round(v.X + cx))
 		sy := int(math.Round(v.Y/2 + cy))
 
-		(*g.Screen).SetContent(sx, sy, '*', nil, style)
+		if(sx >= 0 && sx < w && sy >= 0 && sy < h) {
+			(*g.Screen).SetContent(sx, sy, '*', nil, style)
+		}
+
 
 		v.X += (v2.X - v1.X) / steps
 		v.Y += (v2.Y - v1.Y) / steps

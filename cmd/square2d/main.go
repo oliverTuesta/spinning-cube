@@ -38,7 +38,7 @@ func main() {
 
 	cx, cy := float64(w)/2.0, float64(h)/2.0
 
-	rectangleWidth := 15
+	rectangleWidth := 20
 	rectangleHeight := 20
 
 	offcenter := 15.0

@@ -5,6 +5,8 @@ import "math"
 type Cube struct {
 	vertices []Vec3
 	edges    [][2]int
+	faces []Face
+	width float64
 }
 
 func NewCube(width float64) Cube {
@@ -19,11 +21,15 @@ func NewCube(width float64) Cube {
 			{width, width, width},
 			{0, width, width},
 		},
-		edges: [][2]int{
-			{0, 1}, {1, 2}, {2, 3}, {3, 0},
-			{4, 5}, {5, 6}, {6, 7}, {7, 4},
-			{0, 4}, {1, 5}, {2, 6}, {3, 7},
+		faces: []Face{
+			{[4]int{0, 1, 2, 3}}, // front (z=0)
+			{[4]int{5, 4, 7, 6}}, // back (z=width)
+			{[4]int{4, 0, 3, 7}}, // left (x=0)
+			{[4]int{1, 5, 6, 2}}, // right (x=width)
+			{[4]int{3, 2, 6, 7}}, // top (y=width)
+			{[4]int{4, 5, 1, 0}}, // bottom (y=0)
 		},
+		width: width,
 	}
 }
 
@@ -74,21 +80,34 @@ func (c *Cube) RotateZ(rad float64) {
 }
 
 func (c *Cube) Center() Vec3 {
-    var sum Vec3
-    for _, v := range c.vertices {
-        sum.x += v.x
-        sum.y += v.y
-        sum.z += v.z
-    }
-    n := float64(len(c.vertices))
-    return Vec3{sum.x / n, sum.y / n, sum.z / n}
+	var sum Vec3
+	for _, v := range c.vertices {
+		sum.x += v.x
+		sum.y += v.y
+		sum.z += v.z
+	}
+	n := float64(len(c.vertices))
+	return Vec3{sum.x / n, sum.y / n, sum.z / n}
 }
 
 func (c *Cube) RotateAroundCenter(rx, ry, rz float64) {
-    center := c.Center()
-    c.Move(-center.x, -center.y, -center.z)
-    c.RotateY(ry)
-    c.RotateX(rx)
-    c.RotateZ(rz)
-    c.Move(center.x, center.y, center.z)
+	center := c.Center()
+	c.Move(-center.x, -center.y, -center.z)
+	c.RotateY(ry)
+	c.RotateX(rx)
+	c.RotateZ(rz)
+	c.Move(center.x, center.y, center.z)
 }
+
+func (c *Cube) GetFaceNormal(face Face) Vec3 {
+	v0 := c.vertices[face.vertices[0]]
+	v1 := c.vertices[face.vertices[1]]
+	v2 := c.vertices[face.vertices[2]]
+	
+	edge1 := v1.Sub(v0)
+	edge2 := v2.Sub(v0)
+
+	normal := edge1.Cross(edge2)
+	return normal.Normalize()
+}
+
