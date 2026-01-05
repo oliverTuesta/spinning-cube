@@ -34,11 +34,14 @@ func main() {
 
 	w, h := screen.Size()
 	zbuffer := math3d.NewZBuffer(w,h)
-	g3 := math3d.NewGraphics3D(&screen, 1000, zbuffer)
+	light := math3d.Vec3{X: 0.5, Y: 0.5, Z: 0.5}.Normalize()
+
+	g3 := math3d.NewGraphics3D(&screen, 1000, zbuffer, light)
+
 	cubeWidth := 50.0
 	cube := math3d.NewCube(cubeWidth)
 	cube.Move(-cubeWidth/2,-cubeWidth/2,500)
-
+	
 
 	for {
 		select {

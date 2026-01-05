@@ -16,12 +16,12 @@ type Graphics3D struct {
 	zbuffer *ZBuffer
 }
 
-func NewGraphics3D(screen *tcell.Screen, cd float64, zbuffer *ZBuffer) (Graphics3D) {
+func NewGraphics3D(screen *tcell.Screen, cd float64, zbuffer *ZBuffer, light Vec3) (Graphics3D) {
 	return Graphics3D {
 		screen: screen, 
 		cameraDist: cd, 
 		g2: math2d.NewGraphics2D(screen),
-		light: Vec3{0.5, 0.5, 0.5}.Normalize(),
+		light: light,
 		zbuffer: zbuffer,
 	}
 }
@@ -58,7 +58,7 @@ func (g *Graphics3D) DrawFace(cube *Cube, face Face, char rune) {
 
 	for i := 0; i < len(face.vertices); i++ {
 		projected[i] = cube.vertices[face.vertices[i]].toVec2(g.cameraDist)
-		depths[i] = cube.vertices[face.vertices[i]].z
+		depths[i] = cube.vertices[face.vertices[i]].Z
 	}
 
 	minX, maxX := projected[0].X, projected[0].X

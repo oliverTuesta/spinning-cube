@@ -7,17 +7,17 @@ import (
 )
 
 type Vec3 struct {
-	x,y,z float64
+	X,Y,Z float64
 }
 
 func (a Vec3) toVec2(cameraDist float64) math2d.Vec2 {
-	ad := cameraDist + a.z
+	ad := cameraDist + a.Z
 
-	op := a.y
+	op := a.Y
 	rad := math.Atan(op / ad)
 	y := math.Tan(rad) * cameraDist
 
-	op = a.x
+	op = a.X
 	rad = math.Atan(op / ad)
 	x := math.Tan(rad) * cameraDist
 
@@ -26,29 +26,29 @@ func (a Vec3) toVec2(cameraDist float64) math2d.Vec2 {
 
 func (a Vec3) Sub(b Vec3) Vec3 {
 	return Vec3{
-		a.x - b.x,
-		a.y - b.y,
-		a.z - b.z,
+		a.X - b.X,
+		a.Y - b.Y,
+		a.Z - b.Z,
 	}
 }
 
 func (a Vec3) Cross(b Vec3) Vec3 {
 	return Vec3{
-		a.y*b.z - a.z*b.y,
-		a.z*b.x - a.x*b.z,
-		a.x*b.y - a.y*b.x,
+		a.Y*b.Z - a.Z*b.Y,
+		a.Z*b.X - a.X*b.Z,
+		a.X*b.Y - a.Y*b.X,
 	}
 }
 
 func (a Vec3) Dot(b Vec3) float64 {
-	return a.x * b.x + a.y * b.y + a.z * b.z
+	return a.X * b.X + a.Y * b.Y + a.Z * b.Z
 }
 
 func (v Vec3) Normalize() Vec3 {
-	len := math.Sqrt(v.x*v.x + v.y*v.y + v.z*v.z)
+	len := math.Sqrt(v.X*v.X + v.Y*v.Y + v.Z*v.Z)
 	return Vec3{
-		v.x / len,
-		v.y / len,
-		v.z / len,
+		v.X / len,
+		v.Y / len,
+		v.Z / len,
 	}
 }

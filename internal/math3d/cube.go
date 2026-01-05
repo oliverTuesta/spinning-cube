@@ -35,9 +35,9 @@ func NewCube(width float64) Cube {
 
 func (c *Cube) Move(x float64, y float64, z float64) {
 	for i := 0; i < len(c.vertices); i++ {
-		c.vertices[i].x += x
-		c.vertices[i].y += y
-		c.vertices[i].z += z
+		c.vertices[i].X += x
+		c.vertices[i].Y += y
+		c.vertices[i].Z += z
 	}
 }
 
@@ -45,10 +45,10 @@ func (c *Cube) multiplyMatrix(matrix [][]float64) {
 	for i, vec := range c.vertices {
 		var vals []float64
 		for j := 0; j < len(matrix); j++ {
-			v := matrix[j][0] * vec.x + matrix[j][1] * vec.y + matrix[j][2] *	vec.z
+			v := matrix[j][0] * vec.X + matrix[j][1] * vec.Y + matrix[j][2] *	vec.Z
 			vals = append(vals, v)
 		}
-		c.vertices[i] = Vec3 {x: vals[0], y: vals[1], z: vals[2]}
+		c.vertices[i] = Vec3 {X: vals[0], Y: vals[1], Z: vals[2]}
 	}
 }
 
@@ -82,21 +82,21 @@ func (c *Cube) RotateZ(rad float64) {
 func (c *Cube) Center() Vec3 {
 	var sum Vec3
 	for _, v := range c.vertices {
-		sum.x += v.x
-		sum.y += v.y
-		sum.z += v.z
+		sum.X += v.X
+		sum.Y += v.Y
+		sum.Z += v.Z
 	}
 	n := float64(len(c.vertices))
-	return Vec3{sum.x / n, sum.y / n, sum.z / n}
+	return Vec3{sum.X / n, sum.Y / n, sum.Z / n}
 }
 
 func (c *Cube) RotateAroundCenter(rx, ry, rz float64) {
 	center := c.Center()
-	c.Move(-center.x, -center.y, -center.z)
+	c.Move(-center.X, -center.Y, -center.Z)
 	c.RotateY(ry)
 	c.RotateX(rx)
 	c.RotateZ(rz)
-	c.Move(center.x, center.y, center.z)
+	c.Move(center.X, center.Y, center.Z)
 }
 
 func (c *Cube) GetFaceNormal(face Face) Vec3 {
