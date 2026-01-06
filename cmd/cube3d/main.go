@@ -34,7 +34,7 @@ func main() {
 
 	w, h := screen.Size()
 	zbuffer := math3d.NewZBuffer(w,h)
-	light := math3d.Vec3{X: 0.5, Y: 0.5, Z: 0.5}.Normalize()
+	light := math3d.Vec3{X: -0.3, Y: 0.8, Z: 0.8}.Normalize()
 
 	g3 := math3d.NewGraphics3D(&screen, 1000, zbuffer, light)
 
@@ -52,7 +52,7 @@ func main() {
 			}
 		case <-ticker.C:
 
-			cube.RotateAroundCenter(0.01,0.02,0)
+			cube.RotateAroundCenter(0.01,0.02,0.005)
 
 			screen.Clear()
 			zbuffer.Clear()

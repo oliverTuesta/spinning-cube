@@ -39,17 +39,17 @@ func (g *Graphics3D) CalculateLuminance(normal Vec3) float64{
 }
 
 func GetLuminanceChar(luminance float64) rune {
-    chars := []rune(".,-~:;=!*#$@")
-    index := int(luminance * float64(len(chars)-1))
-    if index >= len(chars) {
-        index = len(chars) - 1
-    }
-    return chars[index]
+	chars := []rune(".:-=+*#%@")
+	index := int(luminance * float64(len(chars)-1))
+	if index >= len(chars) {
+		index = len(chars) - 1
+	}
+	return chars[index]
 }
 
 func interpolateZ(x, y float64, projected [4]math2d.Vec2, depths [4]float64) float64 {
 	// TODO: barycentric coordinates
-    return (depths[0] + depths[1] + depths[2] + depths[3]) / 4
+	return (depths[0] + depths[1] + depths[2] + depths[3]) / 4
 }
 
 func (g *Graphics3D) DrawFace(cube *Cube, face Face, char rune) {
