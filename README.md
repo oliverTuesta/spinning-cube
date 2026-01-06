@@ -4,7 +4,7 @@
 
 This project was made with Go with the [tcell](https://github.com/gdamore/tcell) package.
 
-You can check the math in [a1k0n's blog](https://www.a1k0n.net/2011/07/20/donut-math.html)
+You can check the math [here](https://www.a1k0n.net/2011/07/20/donut-math.html)
 
 ### How to run the project
 
